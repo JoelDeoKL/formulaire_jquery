@@ -1,0 +1,112 @@
+<!-- TP Openclassroom : Mise en place d'un formulaire interactif avec jQuery -->
+<!-- Le code jQuery n'est pas isolser d'un fichier js à part pour plus-->
+<!-- Il est mis en bas du code HTML-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jquery</title>
+</head>
+<body>
+    <div id="erreur">
+        <p style="color:red">
+            Vous n'avez pas rempli correctement les champs du formulaire !
+        </p>
+    </div>
+    <form>
+        <label for="pseudo">Pseudo</label>
+        <input type="text" id="pseudo" name="pseudo" class="champ">
+        <br><br>
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email" class="champ">
+        <br><br>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" class="champ">
+        <br><br>
+        <label for="confirm">Comfirmation</label>
+        <input type="password" id="confirm" name="confirm" class="champ">
+        <br><br>
+        
+        <input type="submit" value="Envoyer" id="envoyer">
+        <input type="reset" value="Rafrechir" id="rafrechir">
+    </form>
+
+    <script src="js/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+
+            var $pseudo = $('#pseudo'),
+                $email = $('#email'),
+                $password = $('#password'),
+                $confirm = $('#confirm'),
+                $envoyer = $('#envoyer'),
+                $vider = $('#rafrechir'),
+                $erreur = $('#erreur'),
+                $champ = $('.champ');
+
+            $champ.keyup(function(){
+                if($(this).val().length < 5){
+                    $(this).css({
+                        borderColor : 'red',
+                        color : 'red'
+                    });
+                }
+                else{
+                    $(this).css({
+                        borderColor : 'green',
+                        color : 'green'
+                    });
+                }
+            });
+
+            $confirm.keyup(function(){
+                if($(this).val() != $password.val()){
+                    $(this).css({
+                        borderColor : 'red',
+                        color : 'red'
+                    });
+                }
+                else{
+                    $(this).css({
+                        borderColor : 'green',
+                        color : 'green'
+                    });
+                }
+            });
+
+            $envoyer.click(function(e){
+                e.preventDefault();
+
+                verifier($pseudo);
+                verifier($email);
+                verifier($password);
+                verifier($confirm);
+            });
+
+            $vider.click(function(){
+                $champ.css({
+                    borderColor : '#ccc',
+                    color : '#555'
+                });
+                $erreur.css('display', 'none');
+            });
+
+            function verifier(champ){
+                if(champ.val() == ""){
+                    $erreur.css('display', 'block');
+                    champ.css({
+                        borderColor : 'red',
+                        color : 'red'
+                    });
+                }
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
